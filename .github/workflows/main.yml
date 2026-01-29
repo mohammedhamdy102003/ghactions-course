@@ -9,3 +9,7 @@ jobs:
       steps:
         - name: print welcom message
           run: echo "welcom for my first workflow"
+        - name: checkout repo
+          uses: actions/checkout@v6.0.2 
+        - name: list repos
+          run: ls -la

@@ -1,2 +1,5 @@
 def test_basic():
-    assert 1 + 1 == 2
+    assert True
+
+def test_math():
+    assert 5 - 3 == 2

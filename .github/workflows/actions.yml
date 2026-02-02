@@ -1,0 +1,17 @@
+on:
+  workflow_dispatch:
+jobs:
+  hybird_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: runs on ubuntu vm
+        run: echo "this is ubuntu vm"
+
+      - name: runs on alpine container
+        uses: docker://alpine3.12
+        with:
+          entrypoint: /bin/sh
+          args: -c "echo 'this is alpine container'"
+
+      - name: BACK to ubuntu vm
+        run: echo "back to ubuntu vm"

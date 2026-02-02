@@ -2,28 +2,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  # الـ Job الأولى: بتشتغل على الـ VM العادي
-  hybrid_job:
-    runs-on: ubuntu-latest
+  job_1:
+    strategy: # تم تصحيح السبلنج هنا
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: ["14.x", "16.x", "18.x"] # إضافة علامات تنصيص وتصحيح الـ X
+    
+    runs-on: ${{ matrix.os }}
+    
     steps:
-      - name: runs on ubuntu vm
-        run: echo "this is ubuntu vm"
-
-      # الطريقة دي صحيحة لتشغيل سطر واحد جوه كونتينر سريع
-      - name: runs on alpine container
-        uses: docker://alpine:3.12
+      - uses: actions/setup-node@v3
         with:
-          entrypoint: /bin/sh
-          args: -c "echo 'this is alpine container'"
-
-      - name: BACK to ubuntu vm
-        run: echo "back to ubuntu vm"
-
-  # الـ Job الثانية: مخصصة بالكامل للـ Node container
-  node_job:
-    runs-on: ubuntu-latest
-    container:
-      image: node:20
-    steps:
-      - run: node --version
-      - run: echo "this is node container"
+          node-version: ${{ matrix.node-version }}
+      - run: node -v

@@ -15,3 +15,11 @@ jobs:
 
       - name: BACK to ubuntu vm
         run: echo "back to ubuntu vm"
+
+      - name: run on node container
+        runs-on: ubuntu-latest
+        container:
+          image: node:20
+        steps:
+          - run: node --version
+          - run: echo "this is node container"

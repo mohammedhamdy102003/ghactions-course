@@ -1,14 +1,17 @@
 on:
   workflow_dispatch:
+
 jobs:
-  hybird_job:
+  # الـ Job الأولى: بتشتغل على الـ VM العادي
+  hybrid_job:
     runs-on: ubuntu-latest
     steps:
       - name: runs on ubuntu vm
         run: echo "this is ubuntu vm"
 
+      # الطريقة دي صحيحة لتشغيل سطر واحد جوه كونتينر سريع
       - name: runs on alpine container
-        uses: docker://alpine3.12
+        uses: docker://alpine:3.12
         with:
           entrypoint: /bin/sh
           args: -c "echo 'this is alpine container'"
@@ -16,10 +19,11 @@ jobs:
       - name: BACK to ubuntu vm
         run: echo "back to ubuntu vm"
 
-      - name: run on node container
-        runs-on: ubuntu-latest
-        container:
-          image: node:20
-        steps:
-          - run: node --version
-          - run: echo "this is node container"
+  # الـ Job الثانية: مخصصة بالكامل للـ Node container
+  node_job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20
+    steps:
+      - run: node --version
+      - run: echo "this is node container"

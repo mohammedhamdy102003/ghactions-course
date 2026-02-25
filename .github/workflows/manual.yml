@@ -1,18 +1,15 @@
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: "choose environment"
-        required: true
-        default: "stagging"
-        type: choice
-        options:
-          - stagging
-          - dev
-          - production
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  job_1:
+    stratey:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [20.X, 16.X, 18.X]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: "deploy app"
-        run: echo "deploying the app to ${{ inputs.environment }}"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix['node-version'] }}

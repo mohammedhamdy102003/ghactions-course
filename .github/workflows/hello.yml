@@ -5,3 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "hello world"
+  say-hello-2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: print("hello world from python script")
+        shell: python
+  ls-the-files:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -lah
+   
